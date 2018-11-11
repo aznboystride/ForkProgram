@@ -17,14 +17,14 @@ int main(int argc, char** argv)
 
   string user_choice;
   cout << "[+] Enter String To Replace Followed By Replacement String: ";
-  cin >> user_choice;
+  getline(cin, user_choice);
   pid_t pid = fork();
   while(user_choice != "!wq") {
     if(!pid) {
       // write child code
     } else {
       cout << "[+]Enter String To Replace Followed By Replacement String: ";
-      cin >> user_choice;
+      getline(cin, user_choice);
     }
   }
   return 0;
