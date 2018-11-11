@@ -4,8 +4,13 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
+  if(argc != 2) {
+    cout << "Enter a file path to edit\n";
+    exit(-1);
+  }
+
   char user_choice[50];
   cout << "[+] Enter String To Replace Followed By Replacement String: ";
   cin >> user_choice;
