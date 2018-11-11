@@ -1,13 +1,16 @@
 #include <iostream>
+#include <fstream>
 #include <unistd.h>
 #include <sys/types.h>
 
 using namespace std;
 
+void replace(char*, char*, char*);
+
 int main(int argc, char** argv)
 {
   if(argc != 2) {
-    cout << "Enter a file path to edit\n";
+    cout << "[!]Enter a file path to edit\n";
     exit(-1);
   }
 
@@ -19,9 +22,13 @@ int main(int argc, char** argv)
     if(!pid) {
       // write child code
     } else {
-      cout << "[+] Enter String To Replace Followed By Replacement String: ";
+      cout << "[+]Enter String To Replace Followed By Replacement String: ";
       cin >> user_choice;
     }
   }
   return 0;
+}
+
+void replace(char* str, char* rep, char* path) {
+  
 }
