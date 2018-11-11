@@ -1,11 +1,12 @@
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <unistd.h>
 #include <sys/types.h>
 
 using namespace std;
 
-void replace(char*, char*, char*);
+void replace(string&, string&, string&);
 
 int main(int argc, char** argv)
 {
@@ -14,11 +15,11 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  char user_choice[50];
+  string user_choice;
   cout << "[+] Enter String To Replace Followed By Replacement String: ";
   cin >> user_choice;
   pid_t pid = fork();
-  while(strcmp(user_choice, "!wq")) {
+  while(user_choice != "!wq") {
     if(!pid) {
       // write child code
     } else {
@@ -29,6 +30,6 @@ int main(int argc, char** argv)
   return 0;
 }
 
-void replace(char* str, char* rep, char* path) {
+void replace(string& str, string& rep, string& path) {
   
 }
