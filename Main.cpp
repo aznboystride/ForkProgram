@@ -22,10 +22,6 @@ int main(int argc, char** argv) {
 
   while(true) {
 
-    cout << "\n* * * Current Contents of File * * *\n";
-    print(argv[1]);
-    cout << "\n";
-
     cout << "[+]Enter String To Replace Followed By Replacement String or '!wq' to quit: ";
     getline(cin, user_choice);
 
