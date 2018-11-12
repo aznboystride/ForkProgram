@@ -10,34 +10,35 @@ int replace(string, string, const char*);
 
 void print(const char*);
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
+
   if(argc != 2) {
-    cout << "[!]Enter a file path to edit\n";
+    printf("Usage: %s %s", argv[0], "\"file_path\"\n");
     exit(-1);
   }
 
   string user_choice;
-
   pid_t pid;
 
   while(true) {
+
     cout << "\n* * * Current Contents of File * * *\n";
     print(argv[1]);
     cout << "\n";
-    cout << "[+]Enter String To Replace Followed By Replacement String: ";
+
+    cout << "[+]Enter String To Replace Followed By Replacement String or '!wq' to quit: ";
     getline(cin, user_choice);
+
     if(user_choice == "!wq") {
       break; // loop ends after user types in '!wq'
     }
-    pid = fork(); // Creates a child process
 
+    pid = fork(); // Creates a child process
     if(pid) {
-      cout << "Parent PID: " << getpid() << "\n";
-      wait(NULL);
+      cout << "Parent's PID: " << getpid() << "\n";
+      wait(NULL); // Wait for child process to terminate
     } else {
-      cout << "Child PID: " << getpid() << "\n";
-      cout << "Child PARENT PID: " << getppid() << "\n";
+      cout << "Child's PID: " << getpid() << "\n";
       size_t spacepos = user_choice.find(0x20);
       int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
       while(!count) { // Inserted bug
