@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void replace(string&, string&, string&);
+int replace(string, string, string);
 
 int main(int argc, char** argv)
 {
@@ -16,20 +16,49 @@ int main(int argc, char** argv)
   }
 
   string user_choice;
-  cout << "[+] Enter String To Replace Followed By Replacement String: ";
-  getline(cin, user_choice);
+
   pid_t pid = fork();
-  while(user_choice != "!wq") {
+
+  while(true) {
     if(!pid) {
       // write child code
     } else {
       cout << "[+]Enter String To Replace Followed By Replacement String: ";
       getline(cin, user_choice);
+      if(user_choice == "!wq") {
+        break;
+      }
+      size_t spacepos = user_choice.find(" ");
+      int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos, user_choice.length()), argv[1]);
     }
   }
   return 0;
 }
 
-void replace(string& str, string& rep, string& path) {
+int replace(string str, string rep, string path) {
+  fstream fs(path, ios::in);
+  string contents, line;
+  int count = 0;
+  if(fs.fail()) {
+    cerr << "[!] Failure opening " << path << endl;
+    exit(-1);
+  }
+  while(getline(fs, line)) {
+    contents += (line + "\n");
+  }
   
+  size_t pos = contents.find(str);
+  if(pos != string::npos) {
+    contents.replace(pos, str.length(), rep);
+  }
+  fs.close();
+
+  fs.open(path, ios::out);
+  if(fs.fail()) {
+    cerr << "[!] Failure opening " << path << endl;
+    exit(-1);
+  }
+  fs << contents;
+  fs.close();
+  return count;
 }
