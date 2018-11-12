@@ -6,7 +6,9 @@
 
 using namespace std;
 
-int replace(string, string, string);
+int replace(string, string, const char*);
+
+void print(const char*);
 
 int main(int argc, char** argv)
 {
@@ -20,7 +22,9 @@ int main(int argc, char** argv)
   pid_t pid;
 
   while(true) {
-
+    cout << "\n* * * Current Contents of File * * *\n";
+    print(argv[1]);
+    cout << "\n";
     cout << "[+]Enter String To Replace Followed By Replacement String: ";
     getline(cin, user_choice);
     if(user_choice == "!wq") {
@@ -33,7 +37,7 @@ int main(int argc, char** argv)
     } else {
       size_t spacepos = user_choice.find(0x20);
       int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
-      cout << count << endl;
+      cout << count << "\n";
 
       return 0;
     }
@@ -46,12 +50,12 @@ int main(int argc, char** argv)
  * and replaces every occurence of string 'str' in that file  
  * with string 'rep'
  */
-int replace(string str, string rep, string path) {
+int replace(string str, string rep, const char* path) {
   fstream fs(path, ios::in);
   string contents, line;
   int count = 0;
   if(fs.fail()) {
-    cerr << "[!]Failure opening " << path << endl;
+    cerr << "[!]Failure opening " << path << "\n";
     exit(-1);
   }
   while(getline(fs, line)) {
@@ -67,10 +71,18 @@ int replace(string str, string rep, string path) {
 
   fs.open(path, ios::out);
   if(fs.fail()) {
-    cerr << "[!]Failure opening " << path << endl;
+    cerr << "[!]Failure opening " << path << "\n";
     exit(-1);
   }
   fs << contents;
   fs.close();
   return count;
+}
+
+void print(const char* path) {
+  fstream fs(path, ios::in);
+  string content;
+  while(getline(fs, content)) {
+    cout << content << "\n";
+  }
 }
