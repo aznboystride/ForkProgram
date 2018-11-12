@@ -17,48 +17,53 @@ int main(int argc, char** argv)
 
   string user_choice;
 
-  pid_t pid = fork();
+  pid_t pid = fork(); // Creates a child process
 
   while(true) {
-    if(!pid) {
+    if(!pid) { // Child process executes code here
       // write child code
-    } else {
+    } else { // Parent process executes code here
       cout << "[+]Enter String To Replace Followed By Replacement String: ";
       getline(cin, user_choice);
       if(user_choice == "!wq") {
-        break;
+        break; // loop ends after user types in '!wq'
       }
+
       size_t spacepos = user_choice.find(" ");
-      int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]);
+      int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
       cout << count << endl;
     }
   }
   return 0;
 }
 
+/**
+ * This function opens a file specified by the string 'path',
+ * and replaces every occurence of string 'str' in that file  
+ * with string 'rep'
+ */
 int replace(string str, string rep, string path) {
   fstream fs(path, ios::in);
   string contents, line;
   int count = 0;
   if(fs.fail()) {
-    cerr << "[!] Failure opening " << path << endl;
+    cerr << "[!]Failure opening " << path << endl;
     exit(-1);
   }
   while(getline(fs, line)) {
     contents += (line + "\n");
   }
   
-  size_t pos = contents.find(str);
-  while(pos != string::npos) {
+  size_t pos;
+  while(pos = contents.find(str) != string::npos) {
     contents.replace(pos, str.length(), rep);
-    pos = contents.find(str);
     count++;
   }
   fs.close();
 
   fs.open(path, ios::out);
   if(fs.fail()) {
-    cerr << "[!] Failure opening " << path << endl;
+    cerr << "[!]Failure opening " << path << endl;
     exit(-1);
   }
   fs << contents;
