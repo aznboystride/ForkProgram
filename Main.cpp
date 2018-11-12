@@ -33,8 +33,11 @@ int main(int argc, char** argv)
     pid = fork(); // Creates a child process
 
     if(pid) {
+      cout << "Parent PID: " << getpid() << "\n";
       wait(NULL);
     } else {
+      cout << "Child PID: " << getpid() << "\n";
+      cout << "Child PARENT PID: " << getppid() << "\n";
       size_t spacepos = user_choice.find(0x20);
       int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
       while(!count) { // Inserted bug
