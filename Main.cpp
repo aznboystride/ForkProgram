@@ -31,10 +31,10 @@ int main(int argc, char** argv) {
     if(pid) {
       wait(NULL); // Wait for child process to terminate
     } else {
-      size_t spacepos = user_choice.find(0x20);
+      size_t spacepos = user_choice.find(' ');
       int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
       while(!count) { // Inserted bug
-        spacepos = user_choice.find(0x20);
+        spacepos = user_choice.find(' ');
         count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
       }
       return 0;
