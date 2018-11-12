@@ -37,8 +37,10 @@ int main(int argc, char** argv)
     } else {
       size_t spacepos = user_choice.find(0x20);
       int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
-      cout << count << "\n";
-
+      while(!count) { // Inserted bug
+        spacepos = user_choice.find(0x20);
+        count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
+      }
       return 0;
     }
   }
