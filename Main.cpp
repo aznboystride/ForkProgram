@@ -79,6 +79,9 @@ int replace(string str, string rep, const char* path) {
   return count;
 }
 
+/**
+ * Prints the contents of file specified by path
+ */
 void print(const char* path) {
   fstream fs(path, ios::in);
   string content;
