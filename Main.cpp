@@ -29,7 +29,7 @@ int main(int argc, char** argv)
         break;
       }
       size_t spacepos = user_choice.find(" ");
-      int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos, user_choice.length()), argv[1]);
+      int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]);
     }
   }
   return 0;
@@ -48,6 +48,7 @@ int replace(string str, string rep, string path) {
   }
   
   size_t pos = contents.find(str);
+  cout << pos << endl;
   if(pos != string::npos) {
     contents.replace(pos, str.length(), rep);
   }
