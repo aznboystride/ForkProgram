@@ -8,8 +8,6 @@ using namespace std;
 
 int replace(string, string, const char*);
 
-void print(const char*);
-
 int main(int argc, char** argv) {
 
   if(argc != 2) {
@@ -31,10 +29,8 @@ int main(int argc, char** argv) {
 
     pid = fork(); // Creates a child process
     if(pid) {
-      cout << "Parent's PID: " << getpid() << "\n";
       wait(NULL); // Wait for child process to terminate
     } else {
-      cout << "Child's PID: " << getpid() << "\n";
       size_t spacepos = user_choice.find(0x20);
       int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
       while(!count) { // Inserted bug
@@ -81,17 +77,3 @@ int replace(string str, string rep, const char* path) {
   return count;
 }
 
-/**
- * Prints the contents of file specified by path
- */
-void print(const char* path) {
-  fstream fs(path, ios::in);
-  if (fs.fail()) {
-    cout << "[!]Failure opening " << path << "\n";
-    exit(-1);
-  }
-  string content;
-  while(getline(fs, content)) {
-    cout << content << "\n";
-  }
-}
