@@ -89,6 +89,10 @@ int replace(string str, string rep, const char* path) {
  */
 void print(const char* path) {
   fstream fs(path, ios::in);
+  if (fs.fail()) {
+    cout << "[!]Failure opening " << path << "\n";
+    exit(-1);
+  }
   string content;
   while(getline(fs, content)) {
     cout << content << "\n";
