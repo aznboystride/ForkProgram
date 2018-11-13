@@ -12,6 +12,12 @@ int main(int argc, char** argv) {
     printf("Usage: %s <path>\n", argv[0]);
     exit(1);
   }
+  std::fstream fs(argv[1], std::ios::in);
+  if(fs.fail()) {
+    printf("Failure opening file: %s\n", argv[1]);
+    exit(1);
+  }
+  fs.close();
 
   pid_t pid;
   int numOfReplacement = 0;
@@ -55,15 +61,10 @@ int replace(std::string str, std::string rep, const char* path) {
   std::string contents, line;
   int numOfReplacement = 0;
   size_t pos;
-  
-  if(fs.fail()) {
-    std::cerr << "[!]Failure opening " << path << "\n";
-    exit(1);
-  }
+
   while(getline(fs, line)) {
     contents += (line + "\n");
   }
-  
   while((pos = contents.find(str)) != std::string::npos) {
     contents.replace(pos, str.length(), rep);
     numOfReplacement++;
@@ -71,11 +72,6 @@ int replace(std::string str, std::string rep, const char* path) {
   fs.close();
 
   fs.open(path, std::ios::out);
-  if(fs.fail()) {
-    std::cerr << "[!]Failure opening " << path << "\n";
-    exit(1);
-  }
-  
   fs << contents;
   fs.close();
   
