@@ -4,38 +4,39 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-using namespace std;
-
 int replace(string, string, const char*);
 
 int main(int argc, char** argv) {
 
   if(argc != 2) {
-    printf("Usage: %s %s", argv[0], "\"file_path\"\n");
-    exit(-1);
+    printf("Usage: %s <path>", argv[0]);
+    exit(1);
   }
 
-  string user_choice;
   pid_t pid;
+  int numOfReplacement = 0;
+  string toReplace, replaceWith;
 
   while(true) {
 
-    cout << "[+]Enter String To Replace Followed By Replacement String or '!wq' to quit: ";
-    getline(cin, user_choice);
+	std::cout << "Enter string to replace or !wq to quit: "; 
+	getline(std::cin, toReplace);
 
-    if(user_choice == "!wq") {
+    if(toReplace == "!wq") {
       break; // loop ends after user types in '!wq'
     }
-
+	
+	std::cout << "Enter string replacement: ";
+	getline(std::cin, replaceWith);
+	
     pid = fork(); // Creates a child process
     if(pid) {
       wait(NULL); // Wait for child process to terminate
     } else {
-      size_t spacepos = user_choice.find(' ');
-      int count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
-      while(!count) { // Inserted bug
-        spacepos = user_choice.find(' ');
-        count = replace(user_choice.substr(0, spacepos), user_choice.substr(spacepos+1, user_choice.length()), argv[1]); // Count of replacements in file
+      numOfReplacement = (toReplace, replaceWith, argv[1]); // Count of replacements in file
+      while(!numOfReplacement) { // Inserted bug
+		numOfReplacement = (toReplace, replaceWith, argv[1]);
+		std::cout << ".";
       }
       return 0;
     }
@@ -49,31 +50,35 @@ int main(int argc, char** argv) {
  * with string 'rep'
  */
 int replace(string str, string rep, const char* path) {
+	
   fstream fs(path, ios::in);
   string contents, line;
-  int count = 0;
+  int numOfReplacement = 0;
+  size_t pos;
+  
   if(fs.fail()) {
-    cerr << "[!]Failure opening " << path << "\n";
-    exit(-1);
+    std::cerr << "[!]Failure opening " << path << "\n";
+    exit(1);
   }
   while(getline(fs, line)) {
     contents += (line + "\n");
   }
   
-  size_t pos;
   while((pos = contents.find(str)) != string::npos) {
     contents.replace(pos, str.length(), rep);
-    count++;
+    numOfReplacement++;
   }
   fs.close();
 
   fs.open(path, ios::out);
   if(fs.fail()) {
-    cerr << "[!]Failure opening " << path << "\n";
-    exit(-1);
+    std::cerr << "[!]Failure opening " << path << "\n";
+    exit(1);
   }
+  
   fs << contents;
   fs.close();
-  return count;
+  
+  return numOfReplacement;
 }
 
