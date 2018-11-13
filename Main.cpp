@@ -39,11 +39,10 @@ int main(int argc, char** argv) {
     if(pid) {
       wait(NULL); // Wait for child process to terminate
     } else {
-      numOfReplacement = replace(toReplace, replaceWith, argv[1]); // Count of replacements in file
-      while(!numOfReplacement) { // Inserted bug
-        numOfReplacement = replace(toReplace, replaceWith, argv[1]);
+      while(!(numOfReplacement = replace(toReplace, replaceWith, argv[1]))) { // Inserted bug
         std::cout << "." << std::flush;
       }
+      std::cout << "Replaced " << numOfReplacement << " occurences\n";
       return 0;
     }
   }
