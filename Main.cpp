@@ -19,24 +19,24 @@ int main(int argc, char** argv) {
 
   while(true) {
 
-	std::cout << "Enter string to replace or !wq to quit: "; 
-	getline(std::cin, toReplace);
+    std::cout << "Enter string to replace or !wq to quit: "; 
+    getline(std::cin, toReplace);
 
     if(toReplace == "!wq") {
       break; // loop ends after user types in '!wq'
     }
-	
-	std::cout << "Enter string replacement: ";
-	getline(std::cin, replaceWith);
-	
+    
+    std::cout << "Enter string replacement: ";
+    getline(std::cin, replaceWith);
+    
     pid = fork(); // Creates a child process
     if(pid) {
       wait(NULL); // Wait for child process to terminate
     } else {
       numOfReplacement = replace(toReplace, replaceWith, argv[1]); // Count of replacements in file
       while(!numOfReplacement) { // Inserted bug
-		numOfReplacement = replace(toReplace, replaceWith, argv[1]);
-		std::cout << "." << std::flush;
+        numOfReplacement = replace(toReplace, replaceWith, argv[1]);
+        std::cout << "." << std::flush;
       }
       return 0;
     }
