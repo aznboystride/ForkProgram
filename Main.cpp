@@ -9,7 +9,7 @@ int replace(std::string, std::string, const char*);
 int main(int argc, char** argv) {
 
   if(argc != 2) {
-    printf("Usage: %s <path>", argv[0]);
+    printf("Usage: %s <path>\n", argv[0]);
     exit(1);
   }
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
       numOfReplacement = replace(toReplace, replaceWith, argv[1]); // Count of replacements in file
       while(!numOfReplacement) { // Inserted bug
 		numOfReplacement = replace(toReplace, replaceWith, argv[1]);
-		std::cout << ".";
+		std::cout << "." << std::flush;
       }
       return 0;
     }
