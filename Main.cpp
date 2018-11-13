@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-int replace(string, string, const char*);
+int replace(std::string, std::string, const char*);
 
 int main(int argc, char** argv) {
 
@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
 
   pid_t pid;
   int numOfReplacement = 0;
-  string toReplace, replaceWith;
+  std::string toReplace, replaceWith;
 
   while(true) {
 
@@ -33,9 +33,9 @@ int main(int argc, char** argv) {
     if(pid) {
       wait(NULL); // Wait for child process to terminate
     } else {
-      numOfReplacement = (toReplace, replaceWith, argv[1]); // Count of replacements in file
+      numOfReplacement = replace(toReplace, replaceWith, argv[1]); // Count of replacements in file
       while(!numOfReplacement) { // Inserted bug
-		numOfReplacement = (toReplace, replaceWith, argv[1]);
+		numOfReplacement = replace(toReplace, replaceWith, argv[1]);
 		std::cout << ".";
       }
       return 0;
@@ -49,10 +49,10 @@ int main(int argc, char** argv) {
  * and replaces every occurence of string 'str' in that file  
  * with string 'rep'
  */
-int replace(string str, string rep, const char* path) {
+int replace(std::string str, std::string rep, const char* path) {
 	
-  fstream fs(path, ios::in);
-  string contents, line;
+  std::fstream fs(path, std::ios::in);
+  std::string contents, line;
   int numOfReplacement = 0;
   size_t pos;
   
@@ -64,13 +64,13 @@ int replace(string str, string rep, const char* path) {
     contents += (line + "\n");
   }
   
-  while((pos = contents.find(str)) != string::npos) {
+  while((pos = contents.find(str)) != std::string::npos) {
     contents.replace(pos, str.length(), rep);
     numOfReplacement++;
   }
   fs.close();
 
-  fs.open(path, ios::out);
+  fs.open(path, std::ios::out);
   if(fs.fail()) {
     std::cerr << "[!]Failure opening " << path << "\n";
     exit(1);
