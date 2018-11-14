@@ -27,19 +27,17 @@ int main(int argc, char** argv) {
     std::cout << "Enter string to replace or !wq to quit: "; 
     getline(std::cin, toReplace);
 
-    if(toReplace == "!wq") {
+    if(toReplace == "!wq")
       break; // loop ends after user types in '!wq'
-    }
     
     std::cout << "Enter string replacement: ";
     getline(std::cin, replaceWith);
     
-    if(fork()) { // creats child process
+    if(fork()) // creats child process
       wait(NULL); // Wait for child process to terminate
-    } else {
-      while(!(numOfReplacement = replace(toReplace, replaceWith, argv[1]))) { // Inserted bug
+    else {
+      while(!(numOfReplacement = replace(toReplace, replaceWith, argv[1]))) // Inserted bug
         std::cout << "." << std::flush;
-      }
       std::cout << "Replaced " << numOfReplacement << " occurences\n";
       return 0;
     }
