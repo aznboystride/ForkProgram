@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
   fs.close();
 
   pid_t pid;
-  int numOfReplacement = 0;
+  int numOfReplacement;
   std::string toReplace, replaceWith;
 
   while(true) {
@@ -49,8 +49,8 @@ int main(int argc, char** argv) {
 }
 
 /**
- * This function opens a file specified by the string 'path',
- * and replaces every occurence of string 'str' in that file  
+ * This function opens a file specified by the string variable 'path',
+ * and replaces every occurence of string contained in the variable 'str' in that file  
  * with string 'rep'
  */
 int replace(std::string str, std::string rep, const char* path) {
