@@ -35,8 +35,7 @@ int main(int argc, char** argv) {
     std::cout << "Enter string replacement: ";
     getline(std::cin, replaceWith);
     
-    pid = fork(); // Creates a child process
-    if(pid) {
+    if(pid = fork()) { // creats child process
       wait(NULL); // Wait for child process to terminate
     } else {
       while(!(numOfReplacement = replace(toReplace, replaceWith, argv[1]))) { // Inserted bug
