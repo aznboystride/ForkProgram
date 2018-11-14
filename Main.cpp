@@ -19,7 +19,6 @@ int main(int argc, char** argv) {
   }
   fs.close();
 
-  pid_t pid;
   int numOfReplacement;
   std::string toReplace, replaceWith;
 
@@ -35,7 +34,7 @@ int main(int argc, char** argv) {
     std::cout << "Enter string replacement: ";
     getline(std::cin, replaceWith);
     
-    if(pid = fork()) { // creats child process
+    if(fork()) { // creats child process
       wait(NULL); // Wait for child process to terminate
     } else {
       while(!(numOfReplacement = replace(toReplace, replaceWith, argv[1]))) { // Inserted bug
@@ -57,12 +56,12 @@ int replace(std::string str, std::string rep, const char* path) {
 	
   std::fstream fs(path, std::ios::in);
   std::string contents, line;
-  int numOfReplacement = 0;
   size_t pos;
+  int numOfReplacement = 0;
 
-  while(getline(fs, line)) {
+  while(getline(fs, line))
     contents += (line + "\n");
-  }
+
   while((pos = contents.find(str)) != std::string::npos) {
     contents.replace(pos, str.length(), rep);
     numOfReplacement++;
