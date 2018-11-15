@@ -59,12 +59,12 @@ int replace(std::string str, std::string rep, const char* path) {
 
   while(getline(fs, line))
     contents += (line + "\n");
+  fs.close();
 
   while((pos = contents.find(str)) != std::string::npos) {
     contents.replace(pos, str.length(), rep);
     numOfReplacement++;
   }
-  fs.close();
 
   fs.open(path, std::ios::out);
   fs << contents;
