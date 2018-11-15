@@ -9,12 +9,12 @@ int replace(std::string, std::string, const char*);
 int main(int argc, char** argv) {
 
   if(argc != 2) {
-    printf("Usage: %s <path>\n", argv[0]);
+    std::cout << "Usage: " << argv[0] << " <path>\n";
     exit(1);
   }
   std::fstream fs(argv[1], std::ios::in);
   if(fs.fail()) {
-    printf("Failure opening file: %s\n", argv[1]);
+    std::cout << "Failure opening file: " << argv[1] << "\n";
     exit(1);
   }
   fs.close();
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
       wait(NULL); // Wait for child process to terminate
     else {
       while(!(numOfReplacement = replace(toReplace, replaceWith, argv[1]))) // Inserted bug
-        std::cout << "." << std::flush;
+        std::cout << ".";
       std::cout << "Replaced " << numOfReplacement << " occurences\n";
       return 0;
     }
