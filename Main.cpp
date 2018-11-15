@@ -1,8 +1,10 @@
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <fstream>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 int replace(std::string, std::string, const char*);
 
